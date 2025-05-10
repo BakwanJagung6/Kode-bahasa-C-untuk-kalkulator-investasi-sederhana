@@ -3,16 +3,6 @@ Kode bahasa C untuk kalkulator investasi sederhana
 
 # Mini Proyek – Coding untuk Kakak Tingkat
 
-## Identitas Mahasiswa
--	Nama: Dava Algafiri Sidiq
--	NIM: 2404297
--	Kelas: 2B
-
-## Identitas Kakak Tingkat
--	Nama: Rochman Bambang Eko Saputro
--	Angkatan: 2022
--	Program Studi: Pendidikan Sistem dan Teknologi Informasi
-
 ## Permintaan Program
 “nih lu pilih ajaa, mau kalkulator investasi apa rute kereta tercepat.”  
 Saya Memilih membuat program kalkulator investasi.
