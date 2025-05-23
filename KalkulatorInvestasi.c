@@ -1,0 +1,406 @@
+#include<stdio.h>
+#include<math.h> // menggunakan fungsi math.h dikarenakan dibutuhkan fungsi pangkat dalam kalkulasinya
+
+void kalkulatorDeposito(){
+    
+    // deklarasi variabel
+    double bungaSebelumPajak, bungaSetelahPajak, pajakBunga, total;
+    float sukuBunga = 0.03; // bunga sebesar 3%
+    int danaAwal, tenor, bulanBerjalan;
+    char yatidak; 
+
+    printf("\n================ KALKULATOR INVESTASI DEPOSITO ================\n");
+
+    // input modal awal, validasi agar bernilai positif
+    printf("\nMasukkan Deposito Awal: Rp");
+    while (scanf("%d", &danaAwal) != 1 || danaAwal <= 0){ 
+        // menampilkan output ini jika input yang dimasukkan tidak sesuai dengan kondisinya
+        printf("Input tidak valid! Masukkan angka positif: "); 
+        // bersihkan buffer input agar input berikutnya dapat dibaca dengan benar
+        while(getchar() != '\n'); 
+    }
+
+    // input tenor, validasi pastikan bernilai positif
+    printf("Masukkan Tenor Deposito (Bulan): ");
+    while (scanf("%d", &tenor) != 1 || tenor <= 0){ 
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+    }
+
+    // meminta user untuk menginput huruf y/n
+    printf("Apakah Anda ingin Melakukan Penarikan Sebelum tempo? (Y/N): "); 
+    scanf(" %c", &yatidak); 
+    while (getchar() != '\n')
+
+    // blok kode ini dijalankan jika input yang dimasukkan selain 'Y'/'y'/'N'/'n'
+    if (yatidak != 'Y' && yatidak != 'y' && yatidak != 'N' && yatidak != 'n') 
+    {
+        printf("Input tidak valid. Tolong Pilih Y atau N\n");
+    } 
+    
+    // jika input yang dimasukkan user adalah 'Y' atau 'y' maka akan menjalankan blok kode berikut ini
+    if (yatidak == 'Y' || yatidak == 'y') 
+    {
+
+       printf("Masukkan Lama Deposito telah Berjalan (Bulan): ");
+       while (scanf("%d", &bulanBerjalan) != 1 || bulanBerjalan <= 0)
+       {
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+       }
+
+       // mengecek input jika input tidak sesaui atau melebihi dari tenor/bulan yang telah ditentukan di awal, jika kondisi ini terpenuhi maka akan menjalankan blok kode berikut
+       if (bulanBerjalan > tenor || bulanBerjalan < 0) 
+       {
+        printf("Input bulan berjalan tidak valid.\n");
+
+        // digunakan untuk memberhentikan fungsi/program
+        return; 
+       }
+    
+       // hitung bunga sebelum pajak berdasarkan dana awal, suku bunga, dan lama berjalan deposito. bunga = danaAwal x sukuBunga x bulanBerjalan / 12
+       bungaSebelumPajak = danaAwal * sukuBunga * bulanBerjalan / 12; 
+
+       // hitung denda penarikan dini sebesar 1% dari dana awal. denda = danaAwal x 1% 
+
+       double denda = danaAwal * 0.01; 
+
+       // hitung bunga setelah dikurangi denda penarikan diri
+       double bungaSetelahDenda = bungaSebelumPajak - denda; 
+
+       // hitung pajak bunga sebesar 20% dari bunga setelah denda. pajakBunga = bungaSetelahDenda x 20%
+       pajakBunga = bungaSetelahDenda * 0.2; 
+
+       // hitung bunga setelah dikurangi pajak
+       bungaSetelahPajak = bungaSetelahDenda - pajakBunga; 
+
+        // hitung total dana setelah tenor terakhir (dana awal + bunga bersih)
+       total = danaAwal + bungaSetelahPajak;
+       
+       // menampilkan hasil perhitungan berupa bunga sebelum pajak, denda, bunga setelah pajak, dan total dana
+       printf("\n----------------------------------------------------------\n"); 
+       printf("\nBunga Sebelum Pajak: Rp%.f\n", bungaSebelumPajak);
+       printf("Denda Penarikan Dini: Rp%.f\n", denda);
+       printf("Bunga Setelah Pajak adalah: Rp%.f\n", bungaSetelahPajak);
+       printf("Total Dana Setelah Tenor Berakhir: Rp%.f", total);
+       printf("\n====================================================\n");
+
+    // jika input yang dimasukkan oleh user adalah 'N' atau 'n' maka akan menjalankan kode blok berikut
+    } else if (yatidak == 'N' || yatidak == 'n') 
+    {
+        // hitung bunga sebelum pajak berdasarkan dana awal, suku bunga, dan tenor. bunga = danaAwal x sukuBunga x bulanBerjalan / 12
+       bungaSebelumPajak = danaAwal * sukuBunga * tenor / 12; 
+
+       // hitung pajak bunga sebesar 20% dari bunga sebelum pajak. pajakBunga = bungaSetelahDenda x 20%
+       pajakBunga = bungaSebelumPajak * 0.2;
+       
+       // hitung bunga setelah dikurangi pajak
+       bungaSetelahPajak = bungaSebelumPajak - pajakBunga; 
+
+       // hitung total dana setelah pajak
+       total = danaAwal + bungaSetelahPajak; 
+
+       // menampilakn hasil perhitungan berupa bunga sebelum pajak, bunga setelah pajak, dan total dana
+       printf("\n----------------------------------------------------------\n");
+       printf("\nBunga Sebelum Pajak: Rp%.f\n", bungaSebelumPajak);
+       printf("Bunga Setelah Pajak adalah: Rp%.f\n", bungaSetelahPajak);
+       printf("Total Dana Setelah Tenor Berakhir: Rp%.f\n", total);
+       printf("\n====================================================\n");
+
+    // jika input yang dimasukkan tidak memenuhi syarat maka akan menjalankan kode blok ini
+    } else {
+       printf("Input tidak valid. Tolong Pilih Y atau N\n"); 
+    }
+
+    return; // digunakan untuk memberhentikan fungsi/program
+}
+
+void kalkulatorSaham(){
+
+        // deklarasi variabel
+        double modalAwal, nilaiAkhir, investasiBulanan, totalModal, keuntungan, roi;
+        int lamaBulan;
+        double tingkatanPerPeriode = 0.07; // tingkata pengembalian tahunan (7%)
+        double tarifPajak = 0.1; // tarif pajak 10%
+        double biayaManajemenTahun = 0.01; // biaya manajemen tahunan 1%
+
+        printf("\n================ KALKULATOR INVESTASI SAHAM ================\n");
+        printf("\nModal Awal: Rp");
+
+        // input modal awal, validasi agar bernilai positif
+        while (scanf("%lf", &modalAwal) != 1 || modalAwal <= 0){
+            // menampilkan output ini jika input yang dimasukkan tidak sesuai dengan kondisinya 
+            printf("Input tidak valid! Masukkan angka positif: ");
+            // bersihkan buffer input agar input berikutnya dapat dibaca dengan benar 
+            while(getchar() != '\n'); 
+        }
+
+        printf("Tambahan Modal: Rp");
+        while (scanf("%lf", &investasiBulanan) != 1 || investasiBulanan <= 0){
+            printf("Input tidak valid! Masukkan angka positif: ");
+            while(getchar() != '\n');
+        }
+
+        printf("Lama Investasi (Bulan): ");
+        while (scanf("%d", &lamaBulan) != 1 || lamaBulan <= 0){
+            printf("Input tidak valid! Masukkan angka positif: ");
+            while(getchar() != '\n');
+        } 
+
+        // hitung pengembalian bulanan tingkatan pengembalian tahunan. pengembalianBulanan = tingkatanPeriode / 12
+        double pengembalianBulanan = tingkatanPerPeriode / 12; 
+
+        // hitung faktor pertumbuhan lama berdasarkan lama investasi. faktorPertumbuhan (1 + pengembalianBulanan) ^ lama bulan
+        double faktorPertumbuhan = pow(1 + pengembalianBulanan, lamaBulan); 
+
+        // hitung nilai modal awal setelah pertumbuhan selama periode investasi. pertumbuhanModalAwal = modalAwal x faktorPertumbuhan
+        double pertumbuhanModalAwal = modalAwal * faktorPertumbuhan; 
+
+        // hiung nilai masa depan dari investasi bulanan yang dilakukan secara rutin. nilaiMasaDepan = investasiBulanan x (faktorPertumbuhan - 1) / pengembalianBulanan
+        double nilaiMasaDepan = investasiBulanan * (faktorPertumbuhan - 1) / pengembalianBulanan; 
+
+        // total nilai akhir investasi
+        nilaiAkhir = pertumbuhanModalAwal + nilaiMasaDepan; 
+
+        // total modal yang telah di investasikan
+        totalModal = modalAwal + (investasiBulanan * lamaBulan); 
+
+        // hitung keuntungan sebelum dikurangi pajak dan biaya
+        keuntungan = nilaiAkhir - totalModal; 
+
+        // hitung return of investment dalam bentuk persen
+        roi = (keuntungan / totalModal) * 100; 
+
+        // hitung biaya manajemen proporsional sesuai lama investasi. biayaManajemen = nilaiAkhir * biayaManajemenTahun x (lamaBulan / 12)
+        double biayaManajemen = nilaiAkhir * biayaManajemenTahun * (lamaBulan / 12);
+        
+        // hitung keuntungan sebelum pajak setelah dikurangi biaya manajemen
+        double keuntunganSebelumPajak = nilaiAkhir - totalModal -biayaManajemen; 
+     
+        // inisalisasi pajak, hanya dijalankan jika keuntungan positif
+        double pajak = 0; 
+        if (keuntunganSebelumPajak > 0)
+        {
+          pajak = keuntunganSebelumPajak * tarifPajak; // pajak 10% dari keuntungan sebelum pajak
+        }
+    
+        // hitung keuntungan bersih setelah pajak
+        double keuntunganBersih = keuntunganSebelumPajak - pajak; 
+
+       // hitung nilai akhir investasi setelah dikurangi pajak dan biaya
+        double nilaiAkhirBersih = totalModal + keuntunganBersih; 
+    
+        // menampilkan hasil perhitungan kepada user dengan total modal, nilai akhir sebelum pajak & biaya manajemen, biaya manajemen, keuntungan sebelum pajak, pajak dari keuntungan, keuntungan setelah pajak, nilai investasi setelah pajak & biaya manajemen, dan roi dalam bentuk persen
+        printf("\nTotal Modal Investasi: Rp%.lf\n", totalModal);
+        printf("Nilai Investasi Sebelum Pajak & Biaya: Rp%.lf\n", nilaiAkhir);
+        printf("\n----------------------------------------------------------\n");
+        printf("Biaya Manajemen: Rp%.lf\n", biayaManajemen);
+        printf("Keuntungan Sebelum Pajak: Rp%.lf\n", keuntunganSebelumPajak);
+        printf("Pajak atas Keuntungan (%.lf%%): Rp%.lf\n", tarifPajak * 100, pajak);
+        printf("\n----------------------------------------------------------\n");
+        printf("\nKeuntungan Bersih Setelah Pajak: Rp%.lf\n",keuntunganBersih);
+        printf("Nilai Investasi Setelah Pajak & Biaya: Rp%.lf\n", nilaiAkhirBersih);
+        printf("ROI (Return of Investment): %.2lf%%\n", roi);
+        printf("\n====================================================\n");
+
+        return; // digunakan untuk memberhentikan fungsi/program
+
+}
+
+void kalkulatorReksadana(){
+
+    // deklarasi variabel 
+    double modalAwal, investasiBulanan, totalModal, nilaiAkhir, keuntungan;
+    double lamaInvestasi;
+    double tingkatPengembalianTahunan = 0.06; // tingkat pengembalian tahunan 6%
+
+    printf("\n================ KALKULATOR INVESTASI REKSADANA ================\n");
+    printf("\nMasukkan Modal Awal (Rp): ");
+
+    // input modal awal, validasi agar bernilai positif
+    while (scanf("%lf", &modalAwal) != 1 || modalAwal <= 0){
+        // menampilkan output ini jika input yang dimasukkan tidak sesuai dengan kondisinya
+        printf("Input tidak valid! Masukkan angka positif: "); 
+        // bersihkan buffer input agar input berikutnya dapat dibaca dengan benar
+        while(getchar() != '\n'); 
+    }
+
+    printf("Masukkan Lama Investasi (bulan): ");
+    while (scanf("%lf", &lamaInvestasi) != 1 || lamaInvestasi <= 0){
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+    }
+
+    printf("Masukkan Investasi Bulanan(Rp): ");
+    while (scanf("%lf", &investasiBulanan) != 1 || investasiBulanan <= 0){
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+    }
+
+    // hitung pengembalian bulanan dari tingkatan pengembalian tahunan
+    double tingkatPengembalianBulanan = tingkatPengembalianTahunan / 12; 
+
+    // hitung faktor pertumbuhan bulanan berdasarkan lama investasi 
+    double faktorPertumbuhan = pow(1 + tingkatPengembalianBulanan, lamaInvestasi); 
+
+    // hitung nilai masa depan dari investasi bulanan yang dilakukan secara rutin
+    double nilaiMasaDepan = investasiBulanan * (faktorPertumbuhan - 1) / tingkatPengembalianBulanan;
+    
+    // hitung nilai modal awal setelah pertumbuhan selama periode investasi
+    double pertumbuhanModalAwal = modalAwal * faktorPertumbuhan; 
+
+    // total nilai akhir investasi
+    nilaiAkhir = pertumbuhanModalAwal + nilaiMasaDepan; 
+
+    // total modal yang telah diinvestasi
+    totalModal = modalAwal + (investasiBulanan * lamaInvestasi); 
+
+    // hitung keuntungan sebelum dikurangi biaya manajemen
+    keuntungan = nilaiAkhir - totalModal; 
+
+    // hitung biaya manajemen proporsional seusai lama investasi (1% per tahun)
+    double biayaManajemen = nilaiAkhir * 0.01 * (lamaInvestasi / 12); 
+
+    // hitung keuntungan setelah dikurangi biaya manajemen
+    double keuntunganSetelahManajemen = nilaiAkhir - totalModal - biayaManajemen; 
+
+    // hitung nilai investasi bersih setelah biaya manajemen
+    double nilaiBersih = keuntunganSetelahManajemen + totalModal; 
+
+    // menampilkan hasil perhitungan kepada user berupa total modal, nilai investasi sebelum biaya manajemen, total keuntungan sebelum biaya manajemen, biaya manajemen (1% per tahun), nilai investasi setelah biaya manajemen, keuntungan bersih setelah biaya manajemen
+    printf("\n----------------------------------------------------------\n");
+    printf("\nTotal Modal yang Dikeluarkan: Rp%.lf", totalModal);
+    printf("\nNilai Investasi Akhir (Sebelum Biaya Manajemen): Rp%.lf", nilaiAkhir);
+    printf("\nTotal Keuntungan Bersih (Sebelum Biaya Manajemen): Rp%.lf\n", keuntungan);
+    printf("\n----------------------------------------------------------\n");
+    printf("\nBiaya Manajemen (1%% per tahun): Rp%.lf\n", biayaManajemen);
+    printf("Nilai Investasi Akhir (Setelah Biaya Manajemen): Rp%.lf\n", nilaiBersih);
+    printf("Total Keuntungan Bersih (Setelah Biaya Manajemen): Rp%.lf\n", nilaiBersih - totalModal);
+    printf("\n====================================================\n");
+
+    return; // digunakan untuk memberhentikan fungsi/program
+
+}
+
+void kalkulatorEmas(){
+
+    // deklarasi variabel
+    int lamaInvestasi;
+    double beratEmas, hargaEmasSaatIni, hargaPembelian, nilaiMasaDepan, keuntungan, biayaSimpan, nilaiBersih;
+    double tingkatKenaikanEmas = 0.085; // tingkatan kenaikan emas per tahun sebesar 8,5%
+    double biayaPenitipanTahun = 30000; // biaya penitipan per tahun seharga Rp30.000
+
+    printf("\n================ KALKULATOR INVESTASI EMAS ================\n");
+    printf("\nBerat Emas (Gram): ");
+
+    // input modal awal, validasi agar bernilai positif
+    while (scanf("%lf", &beratEmas) != 1 || beratEmas <= 0){
+        // menampilkan output ini jika input yang dimasukkan tidak sesuai dengan kondisinya
+        printf("Input tidak valid! Masukkan angka positif: ");
+        // bersihkan buffer input agar input berikutnya dapat dibaca dengan benar 
+        while(getchar() != '\n'); 
+    }
+
+    printf("Lama Investasi (Tahun): ");
+    while (scanf("%d", &lamaInvestasi) != 1 || lamaInvestasi <= 0){
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+    }
+
+    printf("Harga Emas Saat ini (Rp): ");
+    while (scanf("%lf", &hargaEmasSaatIni) != 1 || hargaEmasSaatIni <= 0){
+        printf("Input tidak valid! Masukkan angka positif: ");
+        while(getchar() != '\n');
+    }
+
+    // hitung total biaya penyimpanan emas selama periode investasi. biayaSimpan = biayaPenitipanTahun x lamaInvestasi
+    biayaSimpan = biayaPenitipanTahun * lamaInvestasi; 
+
+    // hitung harga pembelian emas berdasarkan berat dan harga saat ini. hargaPembelian = beratEmas x hargaEmasSaatIni
+    hargaPembelian = beratEmas * hargaEmasSaatIni; 
+
+    // hitung nilai emas di masa depan asumsi kenaikan tahunan majemuk. nilaiMasaDepan = hargaPembelian x (1 + tingkatKenaikanEmas) ^ lamaInvestasi
+    nilaiMasaDepan = hargaPembelian * pow(1 + tingkatKenaikanEmas, lamaInvestasi); 
+
+    // hitung keuntungan kotor dari investasi emas
+    keuntungan = nilaiMasaDepan - hargaPembelian; 
+
+    // hitung nilai bersih setelah dikurangi biaya penyimpanan
+    nilaiBersih = keuntungan - biayaSimpan; 
+
+    // menampilkan hasil perhitungan berupa harga pembelian, biaya simpan emas selama tahun yang telah ditentukan, perkiraan harga emas di masa depan jika stabil, keuntungan , nilai bersih
+    printf("\n----------------------------------------------------------\n");
+    printf("\nTotal Harga Emas: Rp%.lf\n", hargaPembelian);
+    printf("Biaya Simpan Emas Selama %d Tahun adalah: Rp%.lf\n", lamaInvestasi, biayaSimpan);
+    printf("\nPerkiraan Harga Emas di Masa Depan: Rp%.lf\n", nilaiMasaDepan);
+    printf("Total Keuntungan yang Didapat: Rp%.lf\n", keuntungan);
+    printf("\nTotal Nilai Bersih: Rp %.lf", nilaiBersih);
+    printf("\n====================================================\n");
+
+   // digunakan untuk memberhentikan fungsi/program
+   return; 
+
+}
+
+// Deklarasi Statistik sederhana pilihan investasi, setiap kali user memilih jenis kalkulator program akan menyimpan jumlah berapa kali masing-masing di pilih ke dalam array.
+// [0] = Deposito, [1] = Saham, [2] = Reksadana, [3] = Emas
+int counterInvestasi[4] = {0, 0, 0, 0};
+
+int main(){
+
+   int pilihan; // deklarasi integer bernama pilihan yang digunakan untuk memilih menu atau fungsi mana yang ini digunakan oleh user
+
+   // menampilakan menu utama pilihan simulasi kalkulator investasi
+   printf("\n================= KALKULATOR SIMULASI INVESTASI =================\n");
+   printf("====== Disclaimer: Ini Hanya Simulasi Estimasi, Terima Kasih ======\n");
+   printf("Pilihan Kalkulator Investasi\n");
+   printf("1 = Kalkulator Deposito\n");
+   printf("2 = Kalkulator Saham\n");
+   printf("3 = Kalkulator Reksadanai\n");
+   printf("4 = Kalkulator Emas\n");
+   printf("0 = Lihat Statistik\n");
+   printf("Masukkan pilihan Anda (0-4): ");
+
+   // mengecek input merupakan angka integer scanf akan gagal jika memasukkan huruh atau simbol. Memastikan nilai yang dimasukkan angka 0-4, jika selain itu maka akan dianggap tidak valid.
+   while (scanf("%d", &pilihan) != 1 || pilihan < 0 || pilihan > 4){ 
+    // menampilkan output ini jika input yang dimasukkan tidak sesuai dengan kondisinya
+    printf("Input tidak valid! Tolong Masukkan angka positif 0-4: "); 
+    // bersihkan buffer input agar input berikutnya dapat dibaca dengan benar      
+    while(getchar() != '\n'); 
+    }
+
+    // jika input yang dimasukkan maka akan memanggil atau menjalankan fungsi kalkulator deposito
+    if (pilihan == 1) { 
+       kalkulatorDeposito();
+       // menambah nilai ke counterInvestasi sebanyak 1 setiap kali menginput 1
+       counterInvestasi[0]++; 
+    } // jika input yang dimasukkan maka akan memanggil atau menjalankan fungsi kalkulator saham
+    else if (pilihan == 2) { 
+        kalkulatorSaham();
+        // menambah nilai ke counterInvestasi sebanyak 1 setiap kali menginput 2
+        counterInvestasi[1]++; 
+    } // jika input yang dimasukkan maka akan memanggil atau menjalankan fungsi kalkulator reksadana
+    else if (pilihan == 3) { 
+        kalkulatorReksadana();
+        // menambah nilai ke counterInvestasi sebanyak 1 setiap kali menginput 3
+        counterInvestasi[2]++; 
+    } // jika input yang dimasukkan maka akan memanggil atau menjalankan fungsi kalkulator emas
+    else if (pilihan == 4) { 
+        kalkulatorEmas();
+        // menambah nilai ke counterInvestasi sebanyak 1 setiap kali menginput 4
+        counterInvestasi[3]++; 
+    } // jika input yang dimasukkan maka akan memanggil atau menjalankan array counterInvestasi dan menunjukkan statistik berapa kali kalkulator tertentu telah digunakan
+    else if (pilihan == 0){ 
+
+        printf("\n======== Statistik Pengunaan Kalkulator Investasi =========\n");
+        printf("\nDepostito   digunakan sebanyak %d kali\n", counterInvestasi[0]); // banyak fungsi/kalkulator deposito yang telah digunakan
+        printf("\nSaham       digunakan sebanyak %d kali\n", counterInvestasi[1]); // banyak fungsi/kalkulator saham yang telah digunakan
+        printf("\nReksadana   digunakan sebanyak %d kali\n", counterInvestasi[2]); // banyak fungsi/kalkulator reksadana yang telah digunakan
+        printf("\nEmas        digunakan sebanyak %d kali\n", counterInvestasi[3]); // banyak fungsi/kalkulator emas yang telah digunakan
+        printf("\n===========================================================\n");
+    
+    // digunakan untuk menhentikan lopping dan mengakhiri program
+    } while (pilihan != 0); 
+
+    return 0;
+}
