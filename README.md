@@ -1,6 +1,16 @@
 # Kode-bahasa-C-untuk-kalkulator-investasi-sederhana
 Kode bahasa C untuk kalkulator investasi sederhana
 
+## Identitas Mahasiswa
+-	Nama: Dava Algafiri Sidiq
+-	NIM:  2404297
+-	Kelas: 2B PSTI
+
+## Identitas Kakak Tingkat
+-	Nama: Rochaman Bambang Eko Saputro 
+-	Angkatan: 2022
+-	Program Studi: PSTI
+
 # Mini Proyek – Coding untuk Kakak Tingkat
 
 ## Permintaan Program
